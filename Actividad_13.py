@@ -55,11 +55,11 @@ class EmpresaMensajeria:
         if not self.repartidores:
             print("No se ha registrado ningún repartidor")
         else:
-            print("Repartidores registrados:")
+            print("\nRepartidores registrados:")
             for x in self.repartidores:
                 print(x)
             ranking = ordenar(self.repartidores)
-            print("Ranking de repartidores:")
+            print("\nRanking de repartidores:")
             for x in ranking:
                 print(x)
     def buscar_repartidor(self, nombre):
@@ -72,48 +72,57 @@ class EmpresaMensajeria:
         promedio_paquetes = total_paquetes / len(self.repartidores)
         max_paquetes = max([x.paquetes for x in self.repartidores])
         min_paquetes = min([x.paquetes for x in self.repartidores])
-        mayor_repartidor = [x.nombre for x in self.repartidores if x.paquetes == max_paquetes]
-        menor_repartidor = [x.nombre for x in self.repartidores if x.paquetes == min_paquetes]
+        mayor_repartidor = [x for x in self.repartidores if x.paquetes == max_paquetes]
+        menor_repartidor = [x for x in self.repartidores if x.paquetes == min_paquetes]
         print("\nESTADÍSTICAS:")
         print(f"Total de paquetes entregados: {total_paquetes}")
         print(f"Promedio de paquetes entregados: {promedio_paquetes:.2f}")
-        print(f"Repartidor(es) con más entregas: {', '.join(mayor_repartidor)}")
-        print(f"Repartidor(es) con menos entregar: {', '.join(menor_repartidor)}")
+        for i in mayor_repartidor:
+            print(f"Mayor número de entregas: {i.nombre} ({i.paquetes})")
+        for i in menor_repartidor:
+            print(f"Menor número de entregas: {i.nombre} ({i.paquetes})")
 
 empresa = EmpresaMensajeria()
-opcion = "0"
-while opcion != "5":
+opcion = 0
+while opcion != 5:
     print("==SISTEMA MENSAJERÍA==")
     print("1.Registrar repartidor")
     print("2.Mostrar repartidores registrados")
     print("3.Buscar repartidor")
     print("4.Mostrar estadísticas")
     print("5.Salir")
-    opcion = input("\nSeleccione una opción: ")
-    match opcion:
-        case "1":
-            try:
-                cantidad = int(input("¿Cuántos repartidores desea registrar?: "))
-                for i in range(cantidad):
-                    print(f"Ingrese los datos del repartidor {i + 1}:")
-                    nombre = input("\tNombre: ")
-                    paquetes = int(input("\tPaquetes: "))
-                    zona = input("\tZona: ")
-                    repartidor = Repartidor(nombre, paquetes, zona)
-                    empresa.agregar_repartidor(repartidor)
-            except ValueError as e:
-                print(e)
-        case "2":
-            empresa.mostrar()
-        case "3":
-            if not empresa.repartidores:
-                print("No se ha registrado ninguna repartidor")
-                continue
-            buscar_nombre = input("Ingrese el nombre que desea consultar: ")
-            resultado = empresa.buscar_repartidor(buscar_nombre)
-            print(resultado)
-        case "4":
-            if not empresa.repartidores:
-                print("Aún no hay estadisticas, registre al menos un repatidor")
-                continue
-            empresa.estadisticas()
+    try:
+        opcion = int(input("\nSeleccione una opción: "))
+        match opcion:
+            case "1":
+                try:
+                    cantidad = int(input("¿Cuántos repartidores desea registrar?: "))
+                    for i in range(cantidad):
+                        print(f"Ingrese los datos del repartidor {i + 1}:")
+                        nombre = input("\tNombre: ")
+                        paquetes = int(input("\tPaquetes: "))
+                        zona = input("\tZona: ")
+                        repartidor = Repartidor(nombre, paquetes, zona)
+                        empresa.agregar_repartidor(repartidor)
+                except ValueError as e:
+                    print(e)
+            case "2":
+                empresa.mostrar()
+            case "3":
+                if not empresa.repartidores:
+                    print("No se ha registrado ningun repartidor")
+                    continue
+                buscar_nombre = input("Ingrese el nombre que desea consultar: ")
+                resultado = empresa.buscar_repartidor(buscar_nombre)
+                print(resultado)
+            case "4":
+                if not empresa.repartidores:
+                    print("Aún no hay estadísticas, registre al menos un repartidor")
+                    continue
+                empresa.estadisticas()
+            case "5":
+                print("Gracias por usar el sistema de mensajería. ¡Hasta pronto!")
+            case __:
+                print("Opción no disponible")
+    except ValueError:
+        print("ERROR: dato ingresado no válido")
