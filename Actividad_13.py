@@ -46,11 +46,11 @@ class EmpresaMensajeria:
     def __init__(self):
         self.repartidores = []
     def agregar_repartidor(self, repartidor):
-        if repartidor.nombre in self.repartidores:
+        if any(x.nombre.lower() == repartidor.nombre.lower() for x in self.repartidores):
             print("Ya se ha registrado un repartidor con el nombre ingresado")
         else:
             self.repartidores.append(repartidor)
-            print("El registro se completo con éxito")
+            print("Repartidor registrado")
     def mostrar(self):
         if not self.repartidores:
             print("No se ha registrado ningún repartidor")
