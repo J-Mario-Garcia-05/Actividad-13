@@ -94,7 +94,7 @@ while opcion != 5:
     try:
         opcion = int(input("\nSeleccione una opción: "))
         match opcion:
-            case "1":
+            case 1:
                 try:
                     cantidad = int(input("¿Cuántos repartidores desea registrar?: "))
                     for i in range(cantidad):
@@ -106,21 +106,21 @@ while opcion != 5:
                         empresa.agregar_repartidor(repartidor)
                 except ValueError as e:
                     print(e)
-            case "2":
+            case 2:
                 empresa.mostrar()
-            case "3":
+            case 3:
                 if not empresa.repartidores:
                     print("No se ha registrado ningun repartidor")
                     continue
                 buscar_nombre = input("Ingrese el nombre que desea consultar: ")
                 resultado = empresa.buscar_repartidor(buscar_nombre)
                 print(resultado)
-            case "4":
+            case 4:
                 if not empresa.repartidores:
                     print("Aún no hay estadísticas, registre al menos un repartidor")
                     continue
                 empresa.estadisticas()
-            case "5":
+            case 5:
                 print("Gracias por usar el sistema de mensajería. ¡Hasta pronto!")
             case __:
                 print("Opción no disponible")
